@@ -7,7 +7,7 @@ public class QuickSort {
     private String[] stringArray;
     private int numOfI;
     private HashMap<String, Integer> mapStudents;
-    private Objects[] complexNums;
+    private int lengthComplexArray;
 
     public QuickSort(String task) {
         this.task = task;
@@ -28,8 +28,8 @@ public class QuickSort {
         this.mapStudents = map;
         return this;
     }
-    public QuickSort complexArray(Objects[] compArr, int length){
-        this.complexNums = compArr;
+    public QuickSort complexArray(int length){
+        this.lengthComplexArray = length;
         return this;
     }
 
@@ -67,11 +67,20 @@ public class QuickSort {
                 );
             }
             case "task 5" -> {
-                Complex[] complexArray = complexGeneratedNums(5);
-                return String.format("Задание номер: %s; \n Начальный массив: %s; \n Конечный массив: %s",
+                Complex[] complexArray = complexGeneratedNums(lengthComplexArray);
+                double[] modules = getComplexModules(complexArray);
+                double[] sortedModules = quickSortDouble(modules, 0, modules.length-1);
+                HashMap<String, Double> unsortedMap = getHashMapForComplexNums(complexArray, modules);
+                LinkedHashMap<String,Double> sortedMap = getKeysFromValuesDouble(sortedModules, unsortedMap);
+                return String.format("Задание номер: %s; \n Начальный массив: %s; \n Массив модулей: %s\n Соединение модулей и их значений в хешмеп: %s \n Отсортированные модули: %s, \nКонечный LinkedHashMap: %s, \n Конечный массив комплекных чисел %s.",
                         task,
-                        Arrays.toString(complexNums),
-                        Arrays.toString(complexNums)
+                        Arrays.toString(complexArray),
+                        Arrays.toString(modules),
+                        unsortedMap,
+                        Arrays.toString(sortedModules),
+                        sortedMap,
+                        getKeysFromLinkedHashMap(sortedMap)
+
                 );
 
             }
@@ -92,6 +101,7 @@ public class QuickSort {
         return values;
     }
 
+
     public static LinkedHashMap<String, Integer> getKeysFromValues(int[] array, HashMap<String,Integer> oldMap){
         LinkedHashMap<String,Integer> newMap =new LinkedHashMap<>();
         for (int j : array) {
@@ -105,6 +115,7 @@ public class QuickSort {
         }
         return newMap;
     }
+
 
     public static int[] randomArray(int numOfI){
         int[] randArr;
@@ -125,8 +136,75 @@ public class QuickSort {
         }
         return complexNums;
     }
+    public static double[] getComplexModules(Complex[] compArr){
+        double[] abs = new double[compArr.length];
+        for (int i = 0; i< compArr.length; i++){
+            abs[i] = compArr[i].module();
+        }
+        return abs;
+    }
+
+    public static HashMap<String, Double> getHashMapForComplexNums(Complex[] arrayComplex, double[] modules){
+        HashMap<String,Double> unsortedHashMap = new HashMap<>(); //соеднинение несортированного массива комплексны чисел и их модулей
+        for (int i = 0; i < arrayComplex.length; i++){
+            String toStrComplex = arrayComplex[i].toString();
+            unsortedHashMap.put(toStrComplex, modules[i]);
+        }
+        return unsortedHashMap;
+    }
+    public static LinkedHashMap<String, Double> getKeysFromValuesDouble(double[] array, HashMap<String,Double> oldMap){
+        LinkedHashMap<String,Double> newMap =new LinkedHashMap<>();
+        for (int i = 0; i < array.length; i++) {
+            for (Map.Entry entry : oldMap.entrySet()) {
+                double entryValue = (Double) entry.getValue();
+                String keyValue = (String) entry.getKey();
+                if (entryValue == array[i]) {
+                    newMap.put(keyValue, entryValue);
+                }
+            }
+        }
+        return newMap;
+    }
+    public static Set<String> getKeysFromLinkedHashMap(LinkedHashMap<String, Double> map){
+        Set<String> setKeys = map.keySet();
+        return setKeys;
+
+    }
 
 
+    public static double[] quickSortDouble(double[] arr, int low, int high){
+        if (low < high) {
+            int pi = pivotDouble(arr, low, high);
+
+            quickSortDouble(arr, low, pi - 1);
+            quickSortDouble(arr, pi + 1, high);
+        }
+        return arr;
+    }
+
+    public static int pivotDouble(double[] arr, int less, int greater){
+        int middle = less + (greater - less) / 2;
+        double pivot = arr[middle];
+
+        // Обмен опорного элемента с последним, чтобы использовать существующую логику
+        double temp = arr[middle];
+        arr[middle] = arr[greater];
+        arr[greater] = temp;
+        int i = (less - 1);
+        for (int j = less; j < greater; j++) {
+            if (arr[j] < pivot) {
+                i++;
+
+                temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+        temp = arr[i + 1];
+        arr[i + 1] = arr[greater];
+        arr[greater] = temp;
+        return i + 1;
+    }
     public static int[] quickSort(int[] arr, int low, int high) {
         if (low < high) {
             int pi = pivot(arr, low, high);
@@ -192,10 +270,4 @@ public class QuickSort {
         arr[greater] = temp;
         return i + 1;
     }
-
 }
-
-
-
-
-

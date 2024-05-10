@@ -27,14 +27,10 @@ public class Main {
         map.put("Бронников Артем", 78);
         map.put("Максутов Артем", 50);
 
-        QuickSort sortMapStuds = new QuickSort("task 4"). hashMapStud(map);
+        QuickSort sortMapStuds = new QuickSort("task 4").hashMapStud(map);
         System.out.println(sortMapStuds);
         //task 5
-
-
-
-
-
-
+        QuickSort sortComplexArray = new QuickSort("task 5").complexArray(5);
+        System.out.println(sortComplexArray);
     }
 }
