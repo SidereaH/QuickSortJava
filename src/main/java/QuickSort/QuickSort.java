@@ -91,7 +91,7 @@ public class QuickSort {
             }
             case "task 6" -> {
                 double[] hashValues = getArrayFromHashMapDouble(mapDouble);
-                double[] sortedValues = quickSortDouble(hashValues, 0, hashValues.length - 1);
+                double[] sortedValues = quickSortDoubleFromGreater(hashValues, 0, hashValues.length-1);
                 return String.format("Задание номер: %s; \n Начальный массив: %s; \n Конечный массив: %s; \n Итоговый HashMap - %s",
                         task,
                         Arrays.toString(hashValues),
@@ -194,7 +194,38 @@ public class QuickSort {
         return map.keySet();
     }
 
+    public static double[] quickSortDoubleFromGreater(double[] arr, int low, int high){
+        if (low < high) {
+            int pi = pivotDoubleFromGreater(arr, low, high);
 
+            quickSortDoubleFromGreater(arr, low, pi - 1);
+            quickSortDoubleFromGreater(arr, pi + 1, high);
+        }
+        return arr;
+    }
+    public static int pivotDoubleFromGreater(double[] arr, int less, int greater){
+        int middle = less + (greater - less) / 2;
+        double pivot = arr[middle];
+
+        // Обмен опорного элемента с последним, чтобы использовать существующую логику
+        double temp = arr[middle];
+        arr[middle] = arr[greater];
+        arr[greater] = temp;
+        int i = (less - 1);
+        for (int j = less; j < greater; j++) {
+            if (arr[j] > pivot) {
+                i++;
+
+                temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+        temp = arr[i + 1];
+        arr[i + 1] = arr[greater];
+        arr[greater] = temp;
+        return i + 1;
+    }
     public static double[] quickSortDouble(double[] arr, int low, int high){
         if (low < high) {
             int pi = pivotDouble(arr, low, high);

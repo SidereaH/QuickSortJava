@@ -33,6 +33,7 @@ public class Main {
         //task 6
         //Сортировка процессоров по базовой тактовой частоте от большего к меньшему
         HashMap<String, Double> procMap = new HashMap<>();
+
         procMap.put("Intel Core i9-12900K(F)", 3.2);
         procMap.put("Intel Core i5-12400(F)", 2.5);
         procMap.put("AMD Ryzen 9 5950X", 3.2);
