@@ -6,8 +6,9 @@ public class QuickSort {
     private int[] array;
     private String[] stringArray;
     private int numOfI;
-    private HashMap<String, Integer> mapStudents;
+    private HashMap<String, Integer> mapInt;
     private int lengthComplexArray;
+    private HashMap<String, Double> mapDouble;
 
     public QuickSort(String task) {
         this.task = task;
@@ -24,10 +25,15 @@ public class QuickSort {
         this.stringArray = array;
         return this;
     }
-    public QuickSort hashMapStud(HashMap<String,Integer> map){
-        this.mapStudents = map;
+    public QuickSort hashMapInt(HashMap<String,Integer> map){
+        this.mapInt = map;
         return this;
     }
+    public QuickSort hashMapDouble(HashMap<String, Double> map){
+        this.mapDouble = map;
+        return this;
+    }
+
     public QuickSort complexArray(int length){
         this.lengthComplexArray = length;
         return this;
@@ -57,13 +63,13 @@ public class QuickSort {
                         Arrays.toString(quickSortString(stringArray, 0, stringArray.length - 1)));
             }
             case "task 4" -> {
-                int[] hashValues = getArrayFromHashMap(mapStudents);
+                int[] hashValues = getArrayFromHashMapInt(mapInt);
                 int[] sortedValues = quickSort(hashValues, 0, hashValues.length - 1);
                 return String.format("Задание номер: %s; \n Начальный массив: %s; \n Конечный массив: %s; \n Итоговый HashMap - %s",
                         task,
-                        Arrays.toString(getArrayFromHashMap(mapStudents)),
+                        Arrays.toString(getArrayFromHashMapInt(mapInt)),
                         Arrays.toString(sortedValues),
-                        getKeysFromValues(sortedValues , mapStudents)
+                        getKeysFromValues(sortedValues , mapInt)
                 );
             }
             case "task 5" -> {
@@ -72,7 +78,7 @@ public class QuickSort {
                 double[] sortedModules = quickSortDouble(modules, 0, modules.length-1);
                 HashMap<String, Double> unsortedMap = getHashMapForComplexNums(complexArray, modules);
                 LinkedHashMap<String,Double> sortedMap = getKeysFromValuesDouble(sortedModules, unsortedMap);
-                return String.format("Задание номер: %s; \n Начальный массив: %s; \n Массив модулей: %s\n Соединение модулей и их значений в хешмеп: %s \n Отсортированные модули: %s, \nКонечный LinkedHashMap: %s, \n Конечный массив комплекных чисел %s.",
+                return String.format("Задание номер: %s; \n Начальный массив: %s; \n Массив модулей: %s\n Соединение модулей и их значений в хешмеп: %s \n Отсортированные модули: %s, \n Конечный LinkedHashMap: %s, \n Конечный массив комплекных чисел %s.",
                         task,
                         Arrays.toString(complexArray),
                         Arrays.toString(modules),
@@ -80,9 +86,18 @@ public class QuickSort {
                         Arrays.toString(sortedModules),
                         sortedMap,
                         getKeysFromLinkedHashMap(sortedMap)
-
                 );
 
+            }
+            case "task 6" -> {
+                double[] hashValues = getArrayFromHashMapDouble(mapDouble);
+                double[] sortedValues = quickSortDouble(hashValues, 0, hashValues.length - 1);
+                return String.format("Задание номер: %s; \n Начальный массив: %s; \n Конечный массив: %s; \n Итоговый HashMap - %s",
+                        task,
+                        Arrays.toString(hashValues),
+                        Arrays.toString(sortedValues),
+                        getKeysFromValuesDouble(sortedValues , mapDouble)
+                );
             }
             case null, default -> {
                 return "pizdas";
@@ -91,7 +106,7 @@ public class QuickSort {
         }
     }
 
-    public static int[] getArrayFromHashMap(HashMap<String,Integer> hashMap){
+    public static int[] getArrayFromHashMapInt(HashMap<String,Integer> hashMap){
 
         ArrayList<Integer> valuesList = new ArrayList<>(hashMap.values());
         int[] values = new int[valuesList.size()];
@@ -100,6 +115,16 @@ public class QuickSort {
         }
         return values;
     }
+    public static double[] getArrayFromHashMapDouble(HashMap<String,Double> hashMap){
+
+        ArrayList<Double> valuesList = new ArrayList<>(hashMap.values());
+        double[] values = new double[valuesList.size()];
+        for (int i = 0; i < valuesList.size(); i++) {
+            values[i] = valuesList.get(i);
+        }
+        return values;
+    }
+
 
 
     public static LinkedHashMap<String, Integer> getKeysFromValues(int[] array, HashMap<String,Integer> oldMap){
@@ -166,9 +191,7 @@ public class QuickSort {
         return newMap;
     }
     public static Set<String> getKeysFromLinkedHashMap(LinkedHashMap<String, Double> map){
-        Set<String> setKeys = map.keySet();
-        return setKeys;
-
+        return map.keySet();
     }
 
 
