@@ -154,11 +154,11 @@ public class QuickSort {
     }
     public static LinkedHashMap<String, Double> getKeysFromValuesDouble(double[] array, HashMap<String,Double> oldMap){
         LinkedHashMap<String,Double> newMap =new LinkedHashMap<>();
-        for (int i = 0; i < array.length; i++) {
+        for (double v : array) {
             for (Map.Entry entry : oldMap.entrySet()) {
                 double entryValue = (Double) entry.getValue();
                 String keyValue = (String) entry.getKey();
-                if (entryValue == array[i]) {
+                if (entryValue == v) {
                     newMap.put(keyValue, entryValue);
                 }
             }
