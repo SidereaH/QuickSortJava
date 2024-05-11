@@ -6,7 +6,7 @@ public class QuickSort {
     private int[] array;
     private String[] stringArray;
     private int numOfI;
-    private HashMap<String, Integer> mapInt;
+    private LinkedHashMap<String, Integer> mapInt;
     private int lengthComplexArray;
     private HashMap<String, Double> mapDouble;
 
@@ -25,7 +25,7 @@ public class QuickSort {
         this.stringArray = array;
         return this;
     }
-    public QuickSort hashMapInt(HashMap<String,Integer> map){
+    public QuickSort hashMapInt(LinkedHashMap<String,Integer> map){
         this.mapInt = map;
         return this;
     }
@@ -65,9 +65,13 @@ public class QuickSort {
             case "task 4" -> {
                 int[] hashValues = getArrayFromHashMapInt(mapInt);
                 int[] sortedValues = quickSort(hashValues, 0, hashValues.length - 1);
-                return String.format("Задание номер: %s; \n Начальный массив: %s; \n Конечный массив: %s; \n Итоговый HashMap - %s",
+                return String.format("""
+                                Задание номер: %s;
+                                Начальный массив: %s;
+                                Конечный массив: %s;
+                                Итоговый HashMap - %s.""",
                         task,
-                        Arrays.toString(getArrayFromHashMapInt(mapInt)),
+                        mapInt.values(),
                         Arrays.toString(sortedValues),
                         getKeysFromValues(sortedValues , mapInt)
                 );
@@ -75,7 +79,8 @@ public class QuickSort {
             case "task 5" -> {
                 Complex[] complexArray = complexGeneratedNums(lengthComplexArray);
                 double[] modules = getComplexModules(complexArray);
-                double[] sortedModules = quickSortDouble(modules, 0, modules.length-1);
+                double[] copyOfModules = modules.clone();
+                double[] sortedModules = quickSortDouble(copyOfModules, 0, modules.length-1);
                 HashMap<String, Double> unsortedMap = getHashMapForComplexNums(complexArray, modules);
                 LinkedHashMap<String,Double> sortedMap = getKeysFromValuesDouble(sortedModules, unsortedMap);
                 return String.format("Задание номер: %s; \n Начальный массив: %s; \n Массив модулей: %s\n Соединение модулей и их значений в хешмеп: %s \n Отсортированные модули: %s, \n Конечный LinkedHashMap: %s, \n Конечный массив комплекных чисел %s.",
@@ -91,10 +96,11 @@ public class QuickSort {
             }
             case "task 6" -> {
                 double[] hashValues = getArrayFromHashMapDouble(mapDouble);
-                double[] sortedValues = quickSortDoubleFromGreater(hashValues, 0, hashValues.length-1);
+                double[] copyHashValues = hashValues.clone();
+                double[] sortedValues = quickSortDoubleFromGreater(copyHashValues, 0, hashValues.length-1);
                 return String.format("Задание номер: %s; \n Начальный массив: %s; \n Конечный массив: %s; \n Итоговый HashMap - %s",
                         task,
-                        Arrays.toString(hashValues),
+                        mapDouble.values(),
                         Arrays.toString(sortedValues),
                         getKeysFromValuesDouble(sortedValues , mapDouble)
                 );
@@ -106,7 +112,7 @@ public class QuickSort {
         }
     }
 
-    public static int[] getArrayFromHashMapInt(HashMap<String,Integer> hashMap){
+    public static int[] getArrayFromHashMapInt(LinkedHashMap<String,Integer> hashMap){
 
         ArrayList<Integer> valuesList = new ArrayList<>(hashMap.values());
         int[] values = new int[valuesList.size()];
@@ -305,7 +311,7 @@ public class QuickSort {
         int middle = less + (greater - less) / 2;
         int pivot = arr[middle];
 
-        // Обмен опорного элемента с последним, чтобы использовать существующую логику
+        // Обмен опорного элемента с последним
         int temp = arr[middle];
         arr[middle] = arr[greater];
         arr[greater] = temp;

@@ -1,8 +1,8 @@
 package QuickSort;
 
 public class Complex {
-    private final double mRe;
-    private final double mIm;
+    private double mRe;
+    private double mIm;
     public Complex(double re, double im) {
         mRe = re;
         mIm = im;

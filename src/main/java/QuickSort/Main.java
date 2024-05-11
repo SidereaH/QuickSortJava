@@ -1,6 +1,7 @@
 package QuickSort;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 
 public class Main {
@@ -17,16 +18,18 @@ public class Main {
         QuickSort sortStringArray = new QuickSort("task 3").withStringArray(arrayStr);
         System.out.println(sortStringArray);
         //task4
-        HashMap<String, Integer> map = new HashMap<>();
-
-        map.put("Андрей Хуторной", 80);
-        map.put("Никита Елисеев", 69);
-        map.put("Бронников Артем", 78);
+        LinkedHashMap<String, Integer> map = new LinkedHashMap<>();
         map.put("Максутов Артем", 50);
+        map.put("Андрей Хуторной", 80);
+        map.put("Бронников Артем", 78);
+        map.put("Никита Елисеев", 69);
+
+
 
         QuickSort sortMapStuds = new QuickSort("task 4").hashMapInt(map);
         System.out.println(sortMapStuds);
         //task 5
+
         QuickSort sortComplexArray = new QuickSort("task 5").complexArray(5);
         System.out.println(sortComplexArray);
 
