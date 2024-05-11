@@ -83,7 +83,14 @@ public class QuickSort {
                 double[] sortedModules = quickSortDouble(copyOfModules, 0, modules.length-1);
                 HashMap<String, Double> unsortedMap = getHashMapForComplexNums(complexArray, modules);
                 LinkedHashMap<String,Double> sortedMap = getKeysFromValuesDouble(sortedModules, unsortedMap);
-                return String.format("Задание номер: %s; \n Начальный массив: %s; \n Массив модулей: %s\n Соединение модулей и их значений в хешмеп: %s \n Отсортированные модули: %s, \n Конечный LinkedHashMap: %s, \n Конечный массив комплекных чисел %s.",
+                return String.format("""
+                        Задание номер: %s;
+                        Начальный массив: %s;
+                        Массив модулей: %s;
+                        Соединение модулей и их значений в хешмеп: %s;
+                        Отсортированные модули: %s;
+                        Конечный LinkedHashMap: %s;
+                        Конечный массив комплекных чисел: %s.""",
                         task,
                         Arrays.toString(complexArray),
                         Arrays.toString(modules),
@@ -98,7 +105,12 @@ public class QuickSort {
                 double[] hashValues = getArrayFromHashMapDouble(mapDouble);
                 double[] copyHashValues = hashValues.clone();
                 double[] sortedValues = quickSortDoubleFromGreater(copyHashValues, 0, hashValues.length-1);
-                return String.format("Задание номер: %s; \n Начальный массив: %s; \n Конечный массив: %s; \n Итоговый HashMap - %s",
+                return String.format("""
+                                Задание номер: %s;
+                                Начальный массив: %s;
+                                Конечный массив: %s;
+                                Итоговый HashMap: %s.
+                                """,
                         task,
                         mapDouble.values(),
                         Arrays.toString(sortedValues),
@@ -106,7 +118,7 @@ public class QuickSort {
                 );
             }
             case null, default -> {
-                return "pizdas";
+                return "write 'task 1'/ 'task 2' / 'task 3'/ 'task 4'/ 'task 5' / 'task 6'";
             }
 
         }
@@ -159,7 +171,6 @@ public class QuickSort {
     }
 
     public static Complex[] complexGeneratedNums(int length){
-
         Complex[] complexNums = new Complex[length];
         for (int i =0; i< complexNums.length; i++){
             Complex num = new Complex(((int)(Math.random() * 100)-100), ((int)((Math.random() * 100)-100)));
